@@ -1,0 +1,60 @@
+import React, { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+
+const respostas = {
+  'quanto custa': 'O Guia Aesthetic custa apenas R$10,00. Um investimento simbólico pelo seu desenvolvimento físico e visual.',
+  'como funciona': 'O guia funciona através da aplicação de estratégias práticas que envolvem alimentação, exercícios/alongamentos e rotinas detalhadas. Tudo para facilitar o seu progresso.',
+  'o que tem': 'Você receberá um guia completo para:
+- Aumento natural da altura
+- Criação de conteúdo (Guia para Conteúdo)
+- Conquista de um shape ideal
+- Emagrecimento eficiente',
+  'link': 'Aqui está o link para acessar o Guia Aesthetic: https://linktr.ee/guia_aesthetic'
+};
+
+export default function BotGuiaAesthetic() {
+  const [mensagem, setMensagem] = useState('');
+  const [resposta, setResposta] = useState('');
+
+  const handlePergunta = () => {
+    const pergunta = mensagem.toLowerCase();
+    if (pergunta.includes('custa')) setResposta(respostas['quanto custa']);
+    else if (pergunta.includes('como funciona')) setResposta(respostas['como funciona']);
+    else if (pergunta.includes('o que') || pergunta.includes('tem no guia')) setResposta(respostas['o que tem']);
+    else if (pergunta.includes('link') || pergunta.includes('guia')) setResposta(respostas['link']);
+    else setResposta('Desculpe, não entendi. Tente perguntar "Quanto custa o guia?" ou "O que tem no guia?"');
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-200 to-pink-100 p-4">
+      <h1 className="text-3xl font-bold text-purple-900 mb-6">🤖 Bot Guia Aesthetic</h1>
+      <Card className="w-full max-w-md shadow-2xl rounded-2xl">
+        <CardContent className="p-4 space-y-4">
+          <p className="text-sm text-gray-500">Pergunte algo como:</p>
+          <ul className="text-sm text-gray-700 list-disc pl-5">
+            <li>Quanto custa o guia?</li>
+            <li>Como funciona?</li>
+            <li>O que tem no guia?</li>
+            <li>Me manda o link</li>
+          </ul>
+          <Input
+            placeholder="Digite sua pergunta..."
+            value={mensagem}
+            onChange={(e) => setMensagem(e.target.value)}
+          />
+          <Button onClick={handlePergunta} className="w-full bg-purple-700 text-white hover:bg-purple-800">
+            Perguntar
+          </Button>
+          {resposta && (
+            <div className="mt-4 p-3 bg-white border border-purple-300 rounded-xl text-purple-800">
+              {resposta}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
